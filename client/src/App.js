@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/global.css';
+import Header from './Components/Header'
 
 class App extends Component {
+
+  constructor() {
+
+    super()
+
+    this.state = {
+
+    }
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="root">
+        <div>
+          <Header />
+          <div className="bounds">
+            <div className="grid-33">
+              <a className="course--module course--link">
+                <h4 class="course--label">Course</h4>
+                <h3 class="course--title">Build a Basic Bookcase</h3>
+              </a></div>
+            <div className="grid-33">
+              <a className="course--module course--link">
+                <h4 class="course--label">Course</h4>
+                <h3 class="course--title">Learn How to Program</h3>
+              </a></div>
+            <div className="grid-33">
+              <a className="course--module course--link">
+                <h4 class="course--label">Course</h4>
+                <h3 class="course--title">Learn How to Test Programs</h3>
+              </a></div>
+              <div className="grid-33">
+                <a class="course--module course--add--module" href="create-course.html">
+                  <h3 class="course--add--title"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                  viewBox="0 0 13 13" className="add">
+                  <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
+                  </svg>New Course</h3>
+                </a></div>
+          </div>
+        </div>
       </div>
     );
   }
