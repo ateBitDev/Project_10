@@ -10,6 +10,7 @@ import Home from './Home'
 import NotFound from "./Not-Found";
 import CreateCourse from './Create-Course'
 import UpdateCourse from './Update-Course'
+import CourseDetails from './Course-Details'
 
 const Header = () =>   {
 
@@ -28,6 +29,7 @@ const Header = () =>   {
             <Route path="/SignUp" render= {() => <UserSignUp />} />
             <Route path="/Create-Course" render= {() => <CreateCourse />} />
             <Route path="/Update-Course" render= {() => <UpdateCourse />} />
+            <Route path="/Course-Deatils" render={() => <CourseDetails />} />
             <Route  component={NotFound} />
         </Switch>
     </div>
