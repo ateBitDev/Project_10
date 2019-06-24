@@ -8,6 +8,8 @@ import UserSignIn from "./UserSignIn";
 import UserSignUp from './UserSignUp'
 import Home from './Home'
 import NotFound from "./Not-Found";
+import CreateCourse from './Create-Course'
+import UpdateCourse from './Update-Course'
 
 const Header = () =>   {
 
@@ -24,6 +26,8 @@ const Header = () =>   {
             <Route exact path="/" render= {()=> <Home />} />
             <Route path="/SignIn" render= {() => <UserSignIn />} />
             <Route path="/SignUp" render= {() => <UserSignUp />} />
+            <Route path="/Create-Course" render= {() => <CreateCourse />} />
+            <Route path="/Update-Course" render= {() => <UpdateCourse />} />
             <Route  component={NotFound} />
         </Switch>
     </div>
