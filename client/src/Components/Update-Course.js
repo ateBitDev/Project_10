@@ -1,11 +1,7 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const UpdateCourse = () => {
-
-    let handleClick = (event) => {
-        window.history.replaceState({foo: "bar"},"Search", "/")
-        //event.preventDefault();   
-    }
 
     return (
         <div className="bounds course--detail">
@@ -58,7 +54,7 @@ The specifications that follow will produce a bookcase with overall dimensions o
                 </ul>
               </div>
             </div>
-            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={handleClick}>Cancel</button></div>
+            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><Link to="/" className="button button-secondary" >Cancel</Link></div>
           </form>
         </div>
       </div>

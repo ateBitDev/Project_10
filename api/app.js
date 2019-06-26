@@ -4,6 +4,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require("./routes");
+const cors = require('cors');
 
 const morgan = require('morgan');
 const jsonParser = require("body-parser");
@@ -23,6 +24,7 @@ db.once("open",function(){
 // create the Express app
 const app = express();
 
+app.use(cors());
 app.use(jsonParser());
 app.use(morgan('dev'));
 

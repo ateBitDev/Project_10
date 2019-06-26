@@ -5,17 +5,17 @@ const Home = () => {
         <div className="bounds">
       
         <div className="grid-33">
-        <a className="course--module course--link" href="create-course">
+        <a className="course--module course--link" href="Course-Deatils">
           <h4 className="course--label">Course</h4>
           <h3 className="course--title">Build a Basic Bookcase</h3>
         </a></div>
       <div className="grid-33">
-        <a className="course--module course--link" href="create-course">
+        <a className="course--module course--link" href="Course-Deatils">
           <h4 className="course--label">Course</h4>
           <h3 className="course--title">Learn How to Program</h3>
         </a></div>
       <div className="grid-33">
-        <a className="course--module course--link" href="create-course">
+        <a className="course--module course--link" href="Course-Deatils">
           <h4 className="course--label">Course</h4>
           <h3 className="course--title">Learn How to Test Programs</h3>
         </a></div>

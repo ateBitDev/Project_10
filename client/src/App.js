@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter
-} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 import './styles/global.css';
 import Header from './Components/Header'
+import axios from 'axios'
 
 
 
@@ -17,10 +16,19 @@ class App extends Component {
 
     }
   }
+
+  componentDidMount() {
+    axios.get('http://localhost:5000/api/')
+    .then(res => res.json)
+    .then((data) => {
+      this.setState({ courses : data})
+    })
+  }
+
   render() {
     return (
       <div className="root">
-        <div >
+        <div>
           <BrowserRouter>
             <Header />
           </BrowserRouter>
