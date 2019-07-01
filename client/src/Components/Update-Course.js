@@ -35,7 +35,6 @@ class UpdateCourse extends Component {
             materialsNeeded
         })
         .then( res => {
-          console.log("Hello")
             this.props.history.push("")
         })
         
@@ -54,7 +53,6 @@ class UpdateCourse extends Component {
         this.setState({id : id})
         axios.get('http://localhost:5000/api/courses/' + id)
         .then(res => {
-          console.log(res.data)
           this.setState({
             course : res.data,
             id : res.data.id,

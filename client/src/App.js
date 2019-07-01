@@ -9,8 +9,8 @@ import NotFound from "./Components/Not-Found";
 import CreateCourse from './Components/Create-Course'
 import UpdateCourse from './Components/Update-Course'
 import CourseDetails from './Components/Course-Details'
+import Content from './Components/Content'
 import axios from 'axios'
-
 
 
 class App extends Component {
@@ -20,23 +20,52 @@ class App extends Component {
     super()
 
     this.state = {
-      courses: []
+      user : {},
+      username : "",
+      password : ""
     }
 
 
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:5000/api/courses')
+  signOut = () => {
+    localStorage.clear();
+
+    this.props.history.push("/")
+  }
+
+  signIn = (e, emailAddress, password) => {
+    if(e){
+    e.preventDefault();
+    }
+
+    axios.get("http://localhost:5000/api/users", {
+      auth : {
+        username : emailAddress,
+        password : password
+      }
+    })
     .then(res => {
-      const courses = res.data;
-      this.setState({courses});
-      console.log(this.state.courses)
+      if(res.status === 200) {
+        const user = res.data
+        this.setState({
+          user : user,
+          username : user.emailAddress,
+          password : user.password
+        })
+      }
     })
   }
 
+
+
   render() {
     return (
+      <Content.Provider 
+      value={{
+        signIn : this.signIn.bind(this),
+        signOut : this.signOut.bind(this)
+      }}>
       <div className="root">
         <div>
           <BrowserRouter>
@@ -53,6 +82,7 @@ class App extends Component {
           </BrowserRouter>
         </div>
       </div>
+      </Content.Provider>
     );
   }
 }

@@ -1,23 +1,65 @@
-import React from "react"
-import {Link} from 'react-router-dom'
+import React, {Component} from "react"
+import {Link, withRouter} from 'react-router-dom'
+import axios from 'axios'
 
-const UserSignUp = () => {
+class UserSignUp extends Component {
+
+  constructor() {
+
+    super()
+
+    this.state = {
+      firstName: "",
+      lastName: "",
+      emailAddress: "",
+      password: ""
+    }
+    
+  }
+  handleSubmit = (e, firstName, lastName, emailAddress, password) => {
+    e.preventDefault();
+
+    axios.post("http://localhost:5000/api/users", {
+        firstName,
+        lastName,
+        emailAddress,
+        password
+    })
+    .then( () => {
+        this.props.history.push("")
+    })
+    
+}
+
+handleChange = (e) => {
+    let input = e.target
+
+    this.setState({[input.name] : input.value});
+}
 
 
- return (
+
+
+  render() {
+      
+    const {firstName, lastName, emailAddress, password} = this.state
+
+  return (
 
   <div className="grid-33 centered signin">
     <h1>Sign Up</h1>
-    <form >
-              <div><input id="firstName" name="firstName" type="text" className="" placeholder="First Name" defaultValue="" /></div>
-              <div><input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" defaultValue="" /></div>
-              <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" defaultValue="" /></div>
-              <div><input id="password" name="password" type="password" className="" placeholder="Password" defaultValue="" /></div>
-              <div><input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password" defaultValue="" /></div>
+    <form onSubmit={e => this.handleSubmit(e, firstName, lastName, emailAddress, password)}>
+              <div><input id="firstName" name="firstName" type="text" className="" placeholder="First Name" defaultValue="" onChange={this.handleChange}/></div>
+              <div><input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" defaultValue="" onChange={this.handleChange}/></div>
+              <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" defaultValue="" onChange={this.handleChange}/></div>
+              <div><input id="password" name="password" type="password" className="" placeholder="Password" defaultValue="" onChange={this.handleChange}/></div>
+              <div><input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password" defaultValue="" onChange={this.handleChange}/></div>
               <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><Link to="/" className="button button-secondary" >Cancel</Link></div>
     </form>
   </div>
 
  )
+  }
+
 }
-export default UserSignUp
+export default withRouter(UserSignUp)
