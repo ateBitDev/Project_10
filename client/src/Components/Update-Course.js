@@ -66,7 +66,9 @@ class UpdateCourse extends Component {
     }
 
     render() {
-
+      let num1 = window.location.pathname.lastIndexOf("/")
+      let num2 = window.location.pathname.length
+      let id = window.location.pathname.substring(num1 + 1,num2)
       const {title, estimatedTime, description, materialsNeeded} = this.state
 
         return (
@@ -104,7 +106,7 @@ class UpdateCourse extends Component {
                     </ul>
                   </div>
                 </div>
-                <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><Link to="/" className="button button-secondary" >Cancel</Link></div>
+                <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><Link to={"/Course-Details/" + id} className="button button-secondary" >Cancel</Link></div>
               </form>
             </div>
           </div>

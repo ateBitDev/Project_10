@@ -49,9 +49,10 @@ const user = req.currentUser;
 console.log(user)
 
 res.json({
-    Username: user.emailAddress
-
-    
+    firstName: user.firstName,
+    lastName: user.lastName,
+    emailAddress: user.emailAddress,
+    password: user.password   
     });
 });
 

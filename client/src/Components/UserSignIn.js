@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import Content from './Content'
 
 class  UserSignIn extends Component{
@@ -20,6 +20,7 @@ class  UserSignIn extends Component{
       e.preventDefault();
 
       signIn(e, emailAddress, password)
+      this.props.history.replace("/")
     }
 
     handleChange = (e) => {
@@ -51,4 +52,4 @@ class  UserSignIn extends Component{
     }
 }
 
-export default UserSignIn
+export default withRouter(UserSignIn)

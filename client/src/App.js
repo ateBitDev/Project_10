@@ -4,6 +4,7 @@ import './styles/global.css';
 import Header from './Components/Header'
 import UserSignIn from "./Components/UserSignIn";
 import UserSignUp from './Components/UserSignUp'
+import UserSignOut from './Components/UserSignOut'
 import Home from './Components/Home'
 import NotFound from "./Components/Not-Found";
 import CreateCourse from './Components/Create-Course'
@@ -22,16 +23,20 @@ class App extends Component {
     this.state = {
       user : {},
       username : "",
-      password : ""
+      password : "",
+      signedIn : false
     }
 
 
   }
 
   signOut = () => {
-    localStorage.clear();
-
-    this.props.history.push("/")
+    this.setState({
+      user : {},
+      username : "",
+      password : "",
+      signedIn : false
+    })
   }
 
   signIn = (e, emailAddress, password) => {
@@ -47,14 +52,17 @@ class App extends Component {
     })
     .then(res => {
       if(res.status === 200) {
+        console.log(res)
         const user = res.data
         this.setState({
           user : user,
           username : user.emailAddress,
-          password : user.password
+          password : user.password,
+          signedIn : true
         })
       }
     })
+
   }
 
 
@@ -69,11 +77,12 @@ class App extends Component {
       <div className="root">
         <div>
           <BrowserRouter>
-            <Header courses={this.state.courses}/>
+            <Header bool={this.state.signedIn} name={this.state.user.firstName + " " + this.state.user.lastName}/>
               <Switch>
                 <Route exact path="/" render= {()=> <Home courses={this.state.courses}/>} />
                 <Route path="/SignIn" render= {() => <UserSignIn />} />
                 <Route path="/SignUp" render= {() => <UserSignUp />} />
+                <Route path="/SignOut" render= {() => <UserSignOut />} />
                 <Route path="/Create-Course" render= {() => <CreateCourse />} />
                 <Route path="/Update-Course" render= {() => <UpdateCourse />} />
                 <Route path="/Course-Details" render={() => <CourseDetails />} />
