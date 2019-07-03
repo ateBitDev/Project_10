@@ -21,38 +21,36 @@ class UpdateCourse extends Component {
     componentDidMount() {
         this.getCourse()
       }
-
+    
+    //updates the currently rendered course with the submited changes
     handleSubmit = (e) => {
         e.preventDefault();
-        let num1 = window.location.pathname.lastIndexOf("/")
-        let num2 = window.location.pathname.length
-        let id = window.location.pathname.substring(num1 + 1,num2)
         const {title, estimatedTime, description, materialsNeeded} = this.state
-        axios.put("http://localhost:5000/api/courses/" + id, {
+        axios.put("http://localhost:5000/api/courses/" + this.props.match.params.id, {
             title,
             estimatedTime,
             description,
             materialsNeeded
         })
-        .then( res => {
-            this.props.history.push("")
+        .then( () => {
+            this.props.history.push("/")
         })
         
     }
 
+    //updates state to keep track of changes in inputs
     handleChange = (e) => {
         let input = e.target
 
         this.setState({[input.name] : input.value});
     }
 
+    //gets the course that was clicked on in the detailed page 
     getCourse = () => {
-        let num1 = window.location.pathname.lastIndexOf("/")
-        let num2 = window.location.pathname.length
-        let id = window.location.pathname.substring(num1 + 1,num2)
-        this.setState({id : id})
-        axios.get('http://localhost:5000/api/courses/' + id)
+        this.setState({id : this.props.match.params.id})
+        axios.get('http://localhost:5000/api/courses/' + this.props.match.params.id)
         .then(res => {
+          console.log(localStorage.getItem("bool"))
           this.setState({
             course : res.data,
             id : res.data.id,
@@ -65,10 +63,8 @@ class UpdateCourse extends Component {
         })
     }
 
+    //renders course from course-details page 
     render() {
-      let num1 = window.location.pathname.lastIndexOf("/")
-      let num2 = window.location.pathname.length
-      let id = window.location.pathname.substring(num1 + 1,num2)
       const {title, estimatedTime, description, materialsNeeded} = this.state
 
         return (
@@ -101,12 +97,12 @@ class UpdateCourse extends Component {
 
 
                         <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." value={materialsNeeded} onChange={this.handleChange}>
-    </textarea></div>
+                             </textarea></div>
                       </li>
                     </ul>
                   </div>
                 </div>
-                <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><Link to={"/Course-Details/" + id} className="button button-secondary" >Cancel</Link></div>
+                <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><Link to={"/Courses/" + this.props.match.params.id} className="button button-secondary" >Cancel</Link></div>
               </form>
             </div>
           </div>

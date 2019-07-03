@@ -2,26 +2,29 @@ import React from "react"
 import {Link} from 'react-router-dom'
 import Content from "./Content"
 
-const Header = (props) =>   {
+const Header = () =>   {
 
  return (
+
+    //consumer passes signout method from app and uses it as click funtion to remove current user
     <Content.Consumer>
         {({signOut}) => (
-
-   props.bool
-   ? 
+   localStorage.getItem("name")
+   ?
+   //if name exist then renders user name and signout 
    ( <div>
    <div className="header">
        <div className="bounds">
            <h1 className="header--logo">Courses</h1>
            <nav>
-            <span className="signOut">Welcome {props.name}!</span>               
+            <span className="signOut">Welcome {localStorage.getItem("name")}!</span>               
             < Link to="/signOut" className="signin" onClick={signOut}>Sign Out</Link>
             </nav>
        </div>
    </div>
    </div> )
-   :     
+   :
+   //if name Dosen't exist then renders just signIn and signUp      
   ( <div>
         <div className="header">
             <div className="bounds">

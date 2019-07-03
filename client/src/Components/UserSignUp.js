@@ -16,6 +16,8 @@ class UserSignUp extends Component {
     }
     
   }
+
+  //handles the subming of new users
   handleSubmit = (e, firstName, lastName, emailAddress, password) => {
     e.preventDefault();
 
@@ -25,21 +27,26 @@ class UserSignUp extends Component {
         emailAddress,
         password
     })
-    .then( () => {
-        this.props.history.push("")
+    .then( res => {
+      if(res.status === 201) {
+        localStorage.setItem("name", firstName + " " + lastName)
+        localStorage.setItem("bool", "true")
+      }
+        
+        this.props.history.push("/")
+
     })
     
 }
 
+//keeps states updated to changes in inputs
 handleChange = (e) => {
     let input = e.target
 
     this.setState({[input.name] : input.value});
 }
 
-
-
-
+  //renders form to sign up new user
   render() {
       
     const {firstName, lastName, emailAddress, password} = this.state

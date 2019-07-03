@@ -17,7 +17,7 @@ class CreateCourse extends Component {
 
         }
     }
-
+    //function that creates course from the info in the inputs 
     handleSubmit = (e, title, estimatedTime, description, materialsNeeded) => {
         e.preventDefault();
 
@@ -33,12 +33,14 @@ class CreateCourse extends Component {
         
     }
 
+    //updates state to keep track of inputs
     handleChange = (e) => {
         let input = e.target
 
         this.setState({[input.name] : input.value});
     }
 
+    //renders form for new course to be made
     render() {
 
         const {title, estimatedTime, description, materialsNeeded} = this.state

@@ -1,6 +1,7 @@
 import React, {Component}from 'react'
 import axios from 'axios'
 import {Link, withRouter} from 'react-router-dom'
+import ReactMarkDown from 'react-markdown'
 
 class CourseDetails extends Component{
 
@@ -17,7 +18,8 @@ class CourseDetails extends Component{
         componentDidMount() {
             this.getCourse()
           };
-
+        
+        //gets the course that matches the id in the params
         getCourse = () => {
             let num1 = window.location.pathname.lastIndexOf("/")
             let num2 = window.location.pathname.length
@@ -30,25 +32,34 @@ class CourseDetails extends Component{
             })
         }
 
+        //deletes the course that matches the params from the api 
         deleteCourse = (e) => {
           e.preventDefault()
 
           axios.delete("http://localhost:5000/api/courses/" + this.state.id)
           .then(() => {
-            this.props.history.replace("")
+            this.props.history.replace("/")
           })
         }
 
         
-
+    //renders the course that is saved to the state
     render() {
         return (
             <div>
             <div className="actions--bar">
               <div className="bounds">
-                <div className="grid-100"><span><Link className="button" to={"/update-course/" + this.state.id}>Update Course</Link><Link className="button" to="#" onClick={e => this.deleteCourse(e)}>Delete Course</Link></span>
-                <Link className="button button-secondary" to="/">Return to List</Link></div>
-              </div>
+              <div className="grid-100">
+                { localStorage.getItem("name") ? (
+                <span><Link className="button" to={this.props.match.params.id + "/update"}>Update Course</Link><Link className="button" to="#" onClick={e => this.deleteCourse(e)}>Delete Course</Link></span>
+
+               )
+                : ""
+                } 
+                 <Link className="button button-secondary" to="/">Return to List</Link>
+                </div>
+                </div>
+
             </div>
             <div className="bounds course--detail">
               <div className="grid-66">
@@ -58,7 +69,7 @@ class CourseDetails extends Component{
                   <p>By Joe Smith</p>
                 </div>
                 <div className="course--description">
-                 <p>{this.state.course.description}</p>
+                 <ReactMarkDown source={this.state.course.description} />
                 </div>
               </div>
               <div className="grid-25 grid-right">
@@ -71,7 +82,7 @@ class CourseDetails extends Component{
                     <li className="course--stats--list--item">
                       <h4>Materials Needed</h4>
                       <ul>
-                        <li >{this.state.course.materialsNeeded}</li>
+                        <ReactMarkDown source={this.state.course.materialsNeeded} />
                       </ul>
                     </li>
                   </ul>

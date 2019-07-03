@@ -16,19 +16,22 @@ class  UserSignIn extends Component{
       
     }
 
+    // function that handles submit for user signin, and calls the sign in function rom the app.js
     handleSubmit = (e, signIn, emailAddress, password) => {
       e.preventDefault();
 
-      signIn(e, emailAddress, password)
-      this.props.history.replace("/")
+      //signIn function passed from React.Context from app.jd that takes takes a username and password
+      signIn(e, emailAddress, password)      
     }
 
-    handleChange = (e) => {
+      //updates state to changes on inputs
+      handleChange = (e) => {
       let input = e.target
 
       this.setState({[input.name] : input.value});
   }
-
+    
+    //renders form to take userName and password and passes signIn function from app.js
     render() {
 
       const {emailAddress, password} = this.state

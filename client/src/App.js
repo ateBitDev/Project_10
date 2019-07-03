@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route, BrowserRouter, Switch} from 'react-router-dom'
+import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
 import './styles/global.css';
 import Header from './Components/Header'
 import UserSignIn from "./Components/UserSignIn";
@@ -26,19 +26,19 @@ class App extends Component {
       password : "",
       signedIn : false
     }
-
-
   }
 
+  //signOut funtion that removes the currently saved user
   signOut = () => {
     this.setState({
       user : {},
       username : "",
       password : "",
-      signedIn : false
     })
+    localStorage.clear();
   }
 
+  //signIn function that checks the auth of entered user
   signIn = (e, emailAddress, password) => {
     if(e){
     e.preventDefault();
@@ -52,22 +52,25 @@ class App extends Component {
     })
     .then(res => {
       if(res.status === 200) {
-        console.log(res)
         const user = res.data
         this.setState({
           user : user,
           username : user.emailAddress,
           password : user.password,
-          signedIn : true
         })
+        localStorage.setItem("name", user.firstName + " " + user.lastName)
+        this.props.history.push("/courses")
+      } else{
+        localStorage.clear()
+        this.props.history.push("/SignUp")
       }
     })
 
   }
 
-
-
+  //renders entire app
   render() {
+
     return (
       <Content.Provider 
       value={{
@@ -76,19 +79,18 @@ class App extends Component {
       }}>
       <div className="root">
         <div>
-          <BrowserRouter>
             <Header bool={this.state.signedIn} name={this.state.user.firstName + " " + this.state.user.lastName}/>
               <Switch>
-                <Route exact path="/" render= {()=> <Home courses={this.state.courses}/>} />
+                <Route exact path="/" render= {() => <Redirect to="/courses"/>} />
+                <Route exact path="/courses" render= {()=> <Home/>} />
                 <Route path="/SignIn" render= {() => <UserSignIn />} />
                 <Route path="/SignUp" render= {() => <UserSignUp />} />
                 <Route path="/SignOut" render= {() => <UserSignOut />} />
-                <Route path="/Create-Course" render= {() => <CreateCourse />} />
-                <Route path="/Update-Course" render= {() => <UpdateCourse />} />
-                <Route path="/Course-Details" render={() => <CourseDetails />} />
+                <Route path="/courses/create" render= {() => <CreateCourse />} />
+                <Route path="/courses/:id/update" render= {() => <UpdateCourse />} />
+                <Route path="/courses/:id" render={() => <CourseDetails />} />
                 <Route  component={NotFound} />
               </Switch>
-          </BrowserRouter>
         </div>
       </div>
       </Content.Provider>
@@ -96,4 +98,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

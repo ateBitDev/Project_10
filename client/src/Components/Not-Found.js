@@ -2,6 +2,7 @@ import React from "react"
 
 const NotFound = () => {
 
+    //renders not found component if an address is loaded that isn't handled
     return (
         <div>
             <h1>Not Found</h1>
