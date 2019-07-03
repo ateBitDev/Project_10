@@ -28,7 +28,11 @@ class CourseDetails extends Component{
             axios.get('http://localhost:5000/api/courses/' + id)
             .then(res => {
               this.setState({course : res.data});
-              console.log(this.state.course)
+            })
+            .catch(err => {
+              if(err){
+                this.props.history.push("/notFound")
+              }
             })
         }
 
@@ -50,7 +54,7 @@ class CourseDetails extends Component{
             <div className="actions--bar">
               <div className="bounds">
               <div className="grid-100">
-                { localStorage.getItem("name") ? (
+                { (localStorage.getItem("id") === this.state.course.user) && (localStorage.getItem("id")) !== "" ? (
                 <span><Link className="button" to={this.props.match.params.id + "/update"}>Update Course</Link><Link className="button" to="#" onClick={e => this.deleteCourse(e)}>Delete Course</Link></span>
 
                )

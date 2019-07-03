@@ -21,7 +21,7 @@ class  UserSignIn extends Component{
       e.preventDefault();
 
       //signIn function passed from React.Context from app.jd that takes takes a username and password
-      signIn(e, emailAddress, password)      
+      signIn( emailAddress, password)      
     }
 
       //updates state to changes on inputs

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom'
+import Error from './Error'
 import axios from 'axios';
 
 class CreateCourse extends Component {
@@ -13,7 +14,8 @@ class CreateCourse extends Component {
             title : "",
             time : "",
             description : "",
-            needed : ""
+            needed : "",
+            err : ""
 
         }
     }
@@ -25,11 +27,18 @@ class CreateCourse extends Component {
             title,
             estimatedTime,
             description,
-            materialsNeeded
+            materialsNeeded, 
+            user : localStorage.getItem("id")
         })
         .then( () => {
             this.props.history.push("")
         })
+        .catch(err => {
+            console.log(err, 'err')
+            this.setState({
+              err : err.response
+            })
+          })
         
     }
 
@@ -48,6 +57,7 @@ class CreateCourse extends Component {
         return (
             <div className="bounds course--detail">
                 <h1>Create Course</h1>
+                <Error err={this.state.err}/>
                 <div>
                 <div>
                     <div className="validation-errors">

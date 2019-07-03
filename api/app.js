@@ -4,6 +4,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require("./routes");
+//added cors for cross origin resource sharing capability
 const cors = require('cors');
 
 const morgan = require('morgan');

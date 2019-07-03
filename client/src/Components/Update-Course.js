@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link, withRouter} from 'react-router-dom'
+import Error from "./Error"
 import axios from 'axios'
 
 class UpdateCourse extends Component {
@@ -14,7 +15,8 @@ class UpdateCourse extends Component {
             title : "",
             estimatedTime : "",
             description : "",
-            materialsNeeded : ""
+            materialsNeeded : "",
+            err : ""
         }
     }
 
@@ -35,6 +37,12 @@ class UpdateCourse extends Component {
         .then( () => {
             this.props.history.push("/")
         })
+        .catch(err => {
+          console.log(err, 'err')
+          this.setState({
+            err : err.response
+          })
+        })
         
     }
 
@@ -50,10 +58,9 @@ class UpdateCourse extends Component {
         this.setState({id : this.props.match.params.id})
         axios.get('http://localhost:5000/api/courses/' + this.props.match.params.id)
         .then(res => {
-          console.log(localStorage.getItem("bool"))
           this.setState({
             course : res.data,
-            id : res.data.id,
+            id : this.props.match.params.id,
             title : res.data.title,
             estimatedTime : res.data.estimatedTime,
             description : res.data.description,
@@ -66,10 +73,10 @@ class UpdateCourse extends Component {
     //renders course from course-details page 
     render() {
       const {title, estimatedTime, description, materialsNeeded} = this.state
-
         return (
             <div className="bounds course--detail">
             <h1>Update Course</h1>
+            <Error err={this.state.err} />
             <div>
               <form onSubmit={e => this.handleSubmit(e, title, estimatedTime, description, materialsNeeded)}>
                 <div className="grid-66">
