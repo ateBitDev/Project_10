@@ -16,18 +16,52 @@ class UserSignUp extends Component {
       emailAddress: "",
       password: "",
       confirmPassword : "",
-      err : ""
+      err : "",
+      errors : []
     }
     
+  }
+  //added old code to check if email is valid
+  isValidEmail = (userEmail) =>
+  {
+  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(userEmail);
   }
 
   //handles the subming of new users
   handleSubmit = (e, firstName, lastName, emailAddress, password, signIn, confirmPassword) => {
     e.preventDefault();
 
-    if(confirmPassword !== "" && confirmPassword === password ){
+    let arr = []
 
-    axios.post("http://localhost:5000/api/users", {
+   
+
+    if(firstName === "" ) 
+    {
+      arr.push("Please enter a first name")
+     }
+     if(lastName === ""){
+      arr.push("Please enter a last name")
+     }
+     if(emailAddress === "") {
+       arr.push("please enter an email address")
+     }
+     if(password === "") {
+       arr.push("please enter a password")
+     }
+     if(password !== confirmPassword) {
+       arr.push("Passwords don't match")
+     }
+
+     if(!this.isValidEmail(emailAddress)) {
+       arr.push("The email field has to follow this example Example@domain.com")
+     }
+
+     this.setState({
+       errors : arr
+     })
+
+     if(arr.length === 0) {
+      axios.post("http://localhost:5000/api/users", {
         firstName,
         lastName,
         emailAddress,
@@ -46,7 +80,18 @@ class UserSignUp extends Component {
         err : err.response
       })
     })
-  }
+
+    this.setState({
+      errors : []
+    })
+     }
+     else {
+
+     }
+
+
+ 
+  
 }
 
 //keeps states updated to changes in inputs
@@ -59,19 +104,21 @@ handleChange = (e) => {
   //renders form to sign up new user
   render() {
       
-    const {firstName, lastName, emailAddress, password, confirmPassword} = this.state
+    const {firstName, lastName, emailAddress, password, confirmPassword, errors} = this.state
 
   return (
   <Content.Consumer>{ ({signIn}) => 
   <div className="grid-33 centered signin">
     <h1>Sign Up</h1>
     <Error err={this.state.err} />
-    {(password !== confirmPassword && password !== "" && confirmPassword !== "" ) ?
+    {(errors.length !== 0) ?
                 <div>
                   <h2 className="validation--errors--label">Validation errors</h2> 
                   <div className="validation-errors">
-                    <ul>
-                      <li>Passwords Don't Match</li>
+                    <ul>{errors.map((err,index) => (
+                      <li key={index}>{err}</li>
+                    ))}
+                      
                     </ul>
                 </div>
                   </div> : ""}

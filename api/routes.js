@@ -115,12 +115,12 @@ router.post("/courses",[
     check('description')
     .exists({checkNull:true,checkFalsy:true})
     .withMessage('Please enter a description'),
-    check('estimatedTime')
-    .exists({checkNull:true,checkFalsy:true})
-    .withMessage('please enter an estimatedTime'),
-    check('materialsNeeded')
-    .exists({checkNull:true,checkFalsy:true})
-    .withMessage("please enter the materialsNeeded"),
+    // check('estimatedTime')
+    // .exists({checkNull:true,checkFalsy:true})
+    // .withMessage('please enter an estimatedTime'),
+    // check('materialsNeeded')
+    // .exists({checkNull:true,checkFalsy:true})
+    // .withMessage("please enter the materialsNeeded"),
 ],(req,res,next)=>{
     let errors = validationResult(req);
 
@@ -145,12 +145,12 @@ router.put("/courses/:id",[
     check('description')
     .exists({checkNull:true,checkFalsy:true})
     .withMessage('Please enter a description'),
-    check('estimatedTime')
-    .exists({checkNull:true,checkFalsy:true})
-    .withMessage('please enter an estimatedTime'),
-    check('materialsNeeded')
-    .exists({checkNull:true,checkFalsy:true})
-    .withMessage("please enter the materialsNeeded"),
+    // check('estimatedTime')
+    // .exists({checkNull:true,checkFalsy:true})
+    // .withMessage('please enter an estimatedTime'),
+    // check('materialsNeeded')
+    // .exists({checkNull:true,checkFalsy:true})
+    // .withMessage("please enter the materialsNeeded"),
 ],(req,res,next)=>{
     let errors = validationResult(req);
 
