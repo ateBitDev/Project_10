@@ -33,8 +33,6 @@ class UserSignUp extends Component {
 
     let arr = []
 
-   
-
     if(firstName === "" ) 
     {
       arr.push("Please enter a first name")
@@ -88,9 +86,6 @@ class UserSignUp extends Component {
      else {
 
      }
-
-
- 
   
 }
 
