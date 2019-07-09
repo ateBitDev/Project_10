@@ -16,8 +16,7 @@ class UpdateCourse extends Component {
             estimatedTime : "",
             description : "",
             materialsNeeded : "",
-            err : "",
-            errors : []
+            err : ""
         }
     }
 
@@ -34,22 +33,6 @@ class UpdateCourse extends Component {
 
       e.preventDefault();
 
-      let arr = []
-
-      console.log(title)
-      if(title === "" )
-      {
-        arr.push("Please enter a title")
-      }
-      if(description === "") {
-        arr.push("Please enter a description")
-      }
-
-      this.setState({
-        errors : arr
-      })
-
-      if(arr.length === 0) {
         axios.put("http://localhost:5000/api/courses/" + this.props.match.params.id, {
             title,
             estimatedTime,
@@ -65,7 +48,6 @@ class UpdateCourse extends Component {
             err : err.response
           })
         })
-      }
 
     }
 
@@ -95,24 +77,13 @@ class UpdateCourse extends Component {
 
     //renders course from course-details page 
     render() {
-      let {title, estimatedTime, description, materialsNeeded, errors} = this.state
+      let {title, estimatedTime, description, materialsNeeded} = this.state
 
 
         return (
             <div className="bounds course--detail">
             <h1>Update Course</h1>
             <Error err={this.state.err} />
-            {(errors.length !== 0) ?
-                <div>
-                  <h2 className="validation--errors--label">Validation errors</h2> 
-                  <div className="validation-errors">
-                    <ul>{errors.map((err,index) => (
-                      <li key={index}>{err}</li>
-                    ))}
-                      
-                    </ul>
-                </div>
-                  </div> : ""}
             <div>
               <form onSubmit={e => this.handleSubmit(e, title, estimatedTime, description, materialsNeeded)}>
                 <div className="grid-66">

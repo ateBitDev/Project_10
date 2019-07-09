@@ -8,7 +8,7 @@ const Error = (props) => {
             <div className="validation-errors">
                 <ul>{props.err ? 
                     props.err.data.errors.map((err, index) => (
-                    <li key={index}>{err}</li>
+                    <li key={index}>*{err}</li>
                     ))
                     : "" }
                 </ul>

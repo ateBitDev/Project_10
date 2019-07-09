@@ -72,14 +72,32 @@ router.post("/users",[
     check('password')
     .exists({checkNull:true,checkFalsy:true})
     .withMessage("please enter a password"),
+
 ],(req,res,next)=>{
     let errors = validationResult(req);
+    let errorMessages = [];
+
+    let isValidEmail = (userEmail) =>
+    {
+    return /^[^@]+@[^@.]+\.[a-z]+$/i.test(userEmail);
+    }
 
     if(!errors.isEmpty()){
-        const errorMessages = errors.array().map(error => error.msg);
+         errorMessages = errors.array().map(error => error.msg);
+    }
 
+    if(!isValidEmail(req.body.emailAddress) && req.body.emailAddress !== "") {
+        errorMessages.push("The email field has to follow this example : Example@domain.com");
+    }
+    
+    if(req.body.confirmPassword !== req.body.password) {
+        errorMessages.push("passwords don't match");
+    }
+
+    if(errorMessages.length !== 0) {
        return res.status(400).json({errors:errorMessages})
     }
+
     let user = new User(req.body);
     user.password = bcrypt.hashSync(user.password);
     user.save(function(err, user){
